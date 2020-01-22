@@ -1,6 +1,6 @@
 Draggables
 ==
-Draggables is sa lightweight and simple drag n' drop solution with all
+Draggables is a lightweight and simple drag n' drop solution with all
 the basic features you will need.
 
 ## Install

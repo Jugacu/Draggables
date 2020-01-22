@@ -19,7 +19,7 @@ Start by creating your first draggable!
 
 <script>
 
-// Here we get both elements, te container and the draggable.
+// Here we get both elements, the container and the draggable.
 
 const container = document.querySelector('#container');
 const drag = document.querySelector('#drag');

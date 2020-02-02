@@ -1,5 +1,5 @@
 (jugacu = window.jugacu || []);
-jugacu.draggable = (element, containersSettings, options, boundary) => {
+jugacu.draggable = (element, containersSettings, options = {}, boundary) => {
 
     let moving;
     let wasOver;
@@ -105,26 +105,16 @@ jugacu.draggable = (element, containersSettings, options, boundary) => {
         }
     }
 
-    // TODO: Make this more efficient
     function collides(container, element) {
-        if (searchBounds(container, 0) instanceof HTMLElement) {
-            let d1 = element.getBoundingClientRect();
-            let d2 = container.getBoundingClientRect();
+        const aRect = container.getBoundingClientRect();
+        const bRect = element.getBoundingClientRect();
 
-            let ox = Math.abs(d1.x - d2.x) < (d1.x < d2.x ? d2.width : d1.width);
-            let oy = Math.abs(d1.y - d2.y) < (d1.y < d2.y ? d2.height : d1.height);
-            return ox && oy;
-        } else {
-            element.offsetBottom = element.offsetTop + element.offsetHeight;
-            element.offsetRight = element.offsetLeft + element.offsetWidth;
-            container.offsetBottom = container.offsetTop + container.offsetHeight;
-            container.offsetRight = container.offsetLeft + container.offsetWidth;
-
-            return !((element.offsetBottom < container.offsetTop) ||
-                (element.offsetTop > container.offsetBottom) ||
-                (element.offsetRight < container.offsetLeft) ||
-                (element.offsetLeft > container.offsetRight));
-        }
+        return !(
+            ((aRect.top + aRect.height) < (bRect.top)) ||
+            (aRect.top > (bRect.top + bRect.height)) ||
+            ((aRect.left + aRect.width) < bRect.left) ||
+            (aRect.left > (bRect.left + bRect.width))
+        );
 
     }
 

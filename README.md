@@ -27,7 +27,7 @@ const drag = document.querySelector('#drag');
 // And then we make the draggable actually drag, giving it
 // a list of containers that is allowed to drop.
 
-draggable(drag, [
+jugacu.draggable(drag, [
     {
         container: container
     }
@@ -49,7 +49,7 @@ function isWeatherClear() {
     return true
 }
 
-draggable(drag, [
+jugacu.draggable(drag, [
     {
         container: container,
         condition: isWeatherClear
@@ -59,6 +59,36 @@ draggable(drag, [
 
 So it only will be able to drop it we have a nice sunny weather!
 
+### Options
+This draggables accepts a bunch of options for you to customize
+
+#### ghostMode
+This option creates a clone of the element that gets dragged to create the illusion that
+the original element ins't moving. 
+```js
+jugacu.draggable(drag, [
+    {
+        container: container
+    }
+], {
+    ghostMode: true
+})
+```
+
+#### ghostCanDrag
+This option allows the ghost element to be draggable when dropped into a container, must
+have 'ghostMode' enabled in order to work.
+
+```js
+jugacu.draggable(drag, [
+    {
+        container: container
+    }
+], {
+    ghostMode: true,
+    ghostCanDrag: true
+})
+```
 ### Events
 
 Draggables provides a simple event handler for mostly of your
@@ -73,7 +103,7 @@ function doSomethingAmazing(container, element) {
     console.log(container, element)
 }
 
-draggable(drag, [
+jugacu.draggable(drag, [
     {
         container: container,
         onHover: doSomethingAmazing
@@ -90,10 +120,25 @@ function stopDoingSomethingAmazing(container, element) {
     console.log(container, element)
 }
 
-draggable(drag, [
+jugacu.draggable(drag, [
     {
         container: container,
         onLeave: stopDoingSomethingAmazing
+    }
+])
+```
+#### onDrop
+Triggered when the draggable successfully  drops into some container.
+To this function is passed the respective container and its element.
+```js
+function weDidit(container, element) {
+    console.log(container, element)
+}
+
+jugacu.draggable(drag, [
+    {
+        container: container,
+        onDrop: weDidit
     }
 ])
 ```

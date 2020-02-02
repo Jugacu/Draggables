@@ -1,4 +1,5 @@
-const draggable = (element, containersSettings, boundary) => {
+(jugacu = window.jugacu || []);
+jugacu.draggable = (element, containersSettings, options, boundary) => {
 
     let moving;
     let wasOver;
@@ -7,8 +8,13 @@ const draggable = (element, containersSettings, boundary) => {
     element.style.userSelect = 'none';
 
     element.addEventListener('mousedown', (e) => {
-        tpToCursor(e, element);
-        enableMoving(element);
+        if (options.ghostMode) {
+            element.clone = element.cloneNode(true);
+            element.parentNode.append(element.clone);
+        }
+
+        tpToCursor(e, options.ghostMode ? element.clone : element);
+        enableMoving(options.ghostMode ? element.clone : element);
         setListeners();
     });
 
@@ -22,14 +28,14 @@ const draggable = (element, containersSettings, boundary) => {
 
     function mousemove(e) {
         if (moving) {
-            tpToCursor(e, element)
+            tpToCursor(e, options.ghostMode ? element.clone : element)
         }
     }
 
     function mouseup(e) {
         if (moving) {
-            tryToDrop(element, e);
-            disableMoving(element);
+            tryToDrop(options.ghostMode ? element.clone : element, e);
+            disableMoving(options.ghostMode ? element.clone : element);
         }
     }
 
@@ -57,7 +63,19 @@ const draggable = (element, containersSettings, boundary) => {
             if (!isFunction(containersSetting.condition) ||
                 (isFunction(containersSetting.condition) && containersSetting.condition(event, element, containersSetting.container))) {
                 containersSetting.container.appendChild(element);
+
+                if (isFunction(containersSetting.onDrop)) {
+                    containersSetting.onDrop(element, containersSetting.container)
+                }
+
+                if (options.ghostMode && options.ghostCanDrag) {
+                    jugacu.draggable(element, containersSettings, options, boundary);
+                }
+            } else if (options.ghostMode) {
+                element.parentNode.removeChild(element);
             }
+        } else if (options.ghostMode) {
+            element.parentNode.removeChild(element);
         }
     }
 

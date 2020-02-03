@@ -1,5 +1,5 @@
-(jugacu = window.jugacu || []);
-jugacu.draggable = (element, containersSettings, options = {}, boundary) => {
+(jugacu = window.jugacu || {})
+    .draggable = (element, containersSettings, options = {}, boundary) => {
 
     let moving;
     let wasOver;

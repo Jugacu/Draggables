@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <style>
+        body {
+            background: #1d1d1d;
+            margin: 0;
+        }
+        #container {
+            width: 600px;
+            height: 300px;
+            background: crimson;
+            border: 5px solid #902525;
+        }
+
+        #draggable {
+            width: 200px;
+            height: 200px;
+            background: gold;
+            border: 5px solid #c5a600;
+        }
+    </style>
+    <script src="draggable.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<div id="draggable"></div>
+<script>
+    const container = document.querySelector('#container');
+    const draggable = document.querySelector('#draggable');
+
+    jugacu.draggable(draggable, [
+        {
+            container
+        }
+    ]);
+</script>
+</body>
+</html>

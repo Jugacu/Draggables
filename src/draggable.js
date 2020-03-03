@@ -65,7 +65,7 @@
                 containersSetting.container.appendChild(element);
 
                 if (isFunction(containersSetting.onDrop)) {
-                    containersSetting.onDrop(element, containersSetting.container)
+                    containersSetting.onDrop(containersSetting.container, element)
                 }
 
                 if (options.ghostMode && options.ghostCanDrag) {
